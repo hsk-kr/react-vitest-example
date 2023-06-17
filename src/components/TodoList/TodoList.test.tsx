@@ -12,8 +12,8 @@ const testAddTodo = async (todoList: RenderResult, text: string) => {
 describe('UI', () => {
   it('todos should be empty', async () => {
     const todoList = render(<TodoList />);
-
     const todoElmts = await todoList.findByTestId('todos');
+
     expect(todoElmts.querySelectorAll('div').length).toBe(0);
   });
 
@@ -23,6 +23,7 @@ describe('UI', () => {
     await testAddTodo(todoList, 'new');
 
     const todosElmt = await todoList.findByTestId('todos');
+
     expect(todosElmt.querySelectorAll('div').length).toBe(1);
 
     const newTodo = await todosElmt.querySelector<HTMLElement>('div');
@@ -40,6 +41,7 @@ describe('UI', () => {
     const checkbox = await todoList.container.querySelector<HTMLInputElement>(
       'input[type=checkbox]'
     );
+
     await checkbox?.click();
     expect(checkbox?.checked).toBe(true);
 
@@ -58,8 +60,8 @@ describe('UI', () => {
     const todoElmtList = await todosElmt.querySelectorAll<HTMLDivElement>(
       'div'
     );
-    expect(todoElmtList.length).toBe(3);
 
+    expect(todoElmtList.length).toBe(3);
     expect(await todoList.findByText('new2')).toBeInTheDocument();
     await todoElmtList[1].querySelector('button')?.click();
     expect(await todoList.findByText('new1')).toBeInTheDocument();
@@ -86,8 +88,8 @@ describe('Functions', () => {
     expect(oldTodoList.length).toBe(1);
 
     const newTodoList = deleteTodo(oldTodoList, oldTodoList[0].id);
-    expect(newTodoList.length).toBe(0);
 
+    expect(newTodoList.length).toBe(0);
     expect(oldTodoList).not.toEqual(newTodoList);
   });
 
@@ -98,8 +100,8 @@ describe('Functions', () => {
     expect(oldTodoList.length).toBe(1);
 
     const newTodoList = changeTodoChecked(oldTodoList, oldTodoList[0].id, true);
-    expect(newTodoList[0].checked).toBe(true);
 
+    expect(newTodoList[0].checked).toBe(true);
     expect(oldTodoList).not.toEqual(newTodoList);
   });
 });
